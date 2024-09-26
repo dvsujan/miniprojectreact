@@ -1,0 +1,10 @@
+.square{ 
+    border:none ; 
+    background-color: #D8D2C2;
+    font-size: 24px;
+    font-weight: 900;
+    margin:1px ; 
+    box-shadow: rgba(216, 210, 194, 0.1) 0px 2px 4px 0px inset;
+    color: #FAF7F0; 
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}

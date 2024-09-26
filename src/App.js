@@ -4,11 +4,13 @@ import logo from "./logo.svg";
 import LandingPage from "./components/LandingPage/LandingPage";
 import GamePage from "./components/GamePage/GamePage";
 import { GameProvider } from "./GameContext";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
     <GameProvider>
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/2pgame" element={<GamePage aiplayer={false} />} />

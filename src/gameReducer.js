@@ -1,11 +1,69 @@
-export const aiMove = (board) => {
+
+export const aiMove = (board, aiPlayer, difficulty) => {
+  if (difficulty) {
+    return minimaxMove(board, aiPlayer);
+  } else {
+    return randomMove(board);
+  }
+};
+
+const randomMove = (board) => {
   const availableMoves = board
     .map((cell, index) => (cell === null ? index : null))
     .filter((index) => index !== null);
-
   const randomIndex = Math.floor(Math.random() * availableMoves.length);
-  
   return availableMoves[randomIndex];
+};
+
+const minimaxMove = (board, aiPlayer) => {
+  const humanPlayer = aiPlayer === "X" ? "O" : "X";
+  let bestScore = -Infinity;
+  let bestMove;
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === null) {
+      board[i] = aiPlayer;
+      let score = minimax(board, 0, false, aiPlayer, humanPlayer);
+      board[i] = null;
+      if (score > bestScore) {
+        bestScore = score;
+        bestMove = i;
+      }
+    }
+  }
+
+  return bestMove;
+};
+
+const minimax = (board, depth, isMaximizing, aiPlayer, humanPlayer) => {
+  const winner = calculateWinner(board);
+  if (winner === aiPlayer) return 10 - depth;
+  if (winner === humanPlayer) return depth - 10;
+  if (CalculateDraw(board)) return 0;
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = aiPlayer;
+        let score = minimax(board, depth + 1, false, aiPlayer, humanPlayer);
+        board[i] = null;
+        bestScore = Math.max(score, bestScore);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = humanPlayer;
+        let score = minimax(board, depth + 1, true, aiPlayer, humanPlayer);
+        board[i] = null;
+        bestScore = Math.min(score, bestScore);
+      }
+    }
+    return bestScore;
+  }
 };
 
 export const initialState = {
@@ -13,9 +71,15 @@ export const initialState = {
   currentPlayer: "X",
   winner: null,
   isGameOver: false,
+  isDraw: false,
   scores: { X: 0, O: 0 },
   isAiEnabled: false,
   aiPlayer: "O",
+  difficulty: false,
+};
+
+export const CalculateDraw = (board) => {
+  return board.every((cell) => cell !== null) && !calculateWinner(board);
 };
 
 export const gameReducer = (state, action) => {
@@ -24,24 +88,33 @@ export const gameReducer = (state, action) => {
       const newBoard = state.board.map((cell, idx) =>
         idx === action.payload.index ? state.currentPlayer : cell
       );
-
       const winner = calculateWinner(newBoard);
-      
+      const isDraw = CalculateDraw(newBoard);
+      if (winner) {
+        state.scores[winner] += 1;
+      }
       return {
         ...state,
         board: newBoard,
         currentPlayer: state.currentPlayer === "X" ? "O" : "X",
-        winner:winner,
+        winner: winner,
+        scores: state.scores,
+        isDraw: isDraw,
         isGameOver: winner || !newBoard.includes(null),
       };
-      
-      case "ENABLE_AI":
+    case "ENABLE_AI":
       return {
         ...state,
         isAiEnabled: true,
         aiPlayer: action.payload.aiPlayer || "O",
+        difficulty: action.payload.difficulty || false,
       };
-
+    case "SET_DIFFICULTY":
+      return {
+        ...state,
+        scores: { X: 0, O: 0 },
+        difficulty: action.payload.difficulty,
+      };
     case "RESET_GAME":
       return {
         ...state,
@@ -56,21 +129,20 @@ export const gameReducer = (state, action) => {
 };
 
 const calculateWinner = (board) => {
-  const winningCombinations = [
+    const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
-    [6, 7, 8], 
+    [6, 7, 8],
     [0, 3, 6],
     [1, 4, 7],
-    [2, 5, 8], 
+    [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6], 
+    [2, 4, 6],
   ];
-  
   for (let combo of winningCombinations) {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a]; 
+      return board[a];
     }
   }
   return null;

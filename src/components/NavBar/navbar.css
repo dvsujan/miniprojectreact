@@ -1,0 +1,35 @@
+nav{
+    height:8vh ; 
+    width:100% ; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #B17457;
+    color:white ; 
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+nav h1{ 
+    margin-left: 10px ;
+    font-weight: 500 ;
+}
+
+.nav-links{ 
+    width: 50% ;
+    height:100% ; 
+}
+.nav-links ul{ 
+    width: 100% ; 
+    height: 100%  ;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.nav-links ul li a{ 
+    list-style: none;
+    text-decoration: none;
+    color:black;
+    color:white ; 
+}
