@@ -3,10 +3,13 @@ import './navbar.css'
 
 const NavBar = () => {
   return (
+    // Navbar
     <nav>
+        {/* navbar logo */}
         <h1 className='nav-logo'>
             TicTacToe
         </h1>
+        {/* navbar links */}
         <div className='nav-links'>
             <ul>
                 <li><a href='/'>Home</a></li>

@@ -1,4 +1,10 @@
-
+/**
+ * returns the index of the board based on the difficulty of the ai
+ * @param {*} board 
+ * @param {*} aiPlayer 
+ * @param {*} difficulty 
+ * @returns 
+ */
 export const aiMove = (board, aiPlayer, difficulty) => {
   if (difficulty) {
     return minimaxMove(board, aiPlayer);
@@ -6,7 +12,11 @@ export const aiMove = (board, aiPlayer, difficulty) => {
     return randomMove(board);
   }
 };
-
+/**
+ * function returns the random index from the board
+ * @param {*} board 
+ * @returns 
+ */
 const randomMove = (board) => {
   const availableMoves = board
     .map((cell, index) => (cell === null ? index : null))
@@ -15,6 +25,12 @@ const randomMove = (board) => {
   return availableMoves[randomIndex];
 };
 
+/**
+ * function returns the best move for the ai based on the minimax algorithm
+ * @param {*} board 
+ * @param {*} aiPlayer 
+ * @returns 
+ */
 const minimaxMove = (board, aiPlayer) => {
   const humanPlayer = aiPlayer === "X" ? "O" : "X";
   let bestScore = -Infinity;
@@ -35,6 +51,17 @@ const minimaxMove = (board, aiPlayer) => {
   return bestMove;
 };
 
+/**
+ *  Helper function for the minimax algorithm
+ * @param {*} board
+ * @param {*} winner
+ * @param {*} board 
+ * @param {*} depth 
+ * @param {*} isMaximizing 
+ * @param {*} aiPlayer 
+ * @param {*} humanPlayer 
+ * @returns 
+ */
 const minimax = (board, depth, isMaximizing, aiPlayer, humanPlayer) => {
   const winner = calculateWinner(board);
   if (winner === aiPlayer) return 10 - depth;
@@ -66,6 +93,9 @@ const minimax = (board, depth, isMaximizing, aiPlayer, humanPlayer) => {
   }
 };
 
+/**
+ * inital state
+ */
 export const initialState = {
   board: Array(9).fill(null),
   currentPlayer: "X",
@@ -78,10 +108,21 @@ export const initialState = {
   difficulty: false,
 };
 
+/**
+ * Helper Function which is used to calculate the draw condition 
+ * @param {*} board 
+ * @returns 
+ */
 export const CalculateDraw = (board) => {
   return board.every((cell) => cell !== null) && !calculateWinner(board);
 };
 
+/**
+ * Reducer function for the game
+ * @param {*} state
+ * @param {*} action
+ * @returns
+ */
 export const gameReducer = (state, action) => {
   switch (action.type) {
     case "MAKE_MOVE":
@@ -128,8 +169,13 @@ export const gameReducer = (state, action) => {
   }
 };
 
+/**
+ *  Helper function to calculate the winner of the game
+ * @param {*} board 
+ * @returns 
+ */
 const calculateWinner = (board) => {
-    const winningCombinations = [
+  const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],

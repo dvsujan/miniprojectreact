@@ -65,3 +65,49 @@
   height: 80%;
   background-color: #faf7f0;
 }
+
+@media (max-width: 768px) {
+    .landing-page {
+      flex-direction: column; 
+      height: 100vh; 
+    }
+  
+    .landing-left, .landing-right {
+      width: 100%;
+      height: auto;
+      justify-content: center;
+    }
+  
+    .landing-content {
+      width: 90%; 
+      height: auto; 
+      padding: 20px 10px; 
+    }
+  
+    .landing-content h1 {
+      font-size: 32px; 
+      width: 100%;
+    }
+  
+    .landing-content p {
+      font-size: 16px; 
+      width: 100%;
+    }
+  
+    .landing-content span {
+      flex-direction: column; 
+      justify-content: center;
+    }
+  
+    .landing-content a {
+      margin-bottom: 10px; 
+      width: 100%; 
+      text-align: center;
+    }
+  
+    .landing-animation {
+      width: 100%; 
+      height: auto; 
+      background-color: #faf7f0;
+    }
+  }

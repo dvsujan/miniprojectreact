@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import logo from "./logo.svg";
 import LandingPage from "./components/LandingPage/LandingPage";
 import GamePage from "./components/GamePage/GamePage";
-import { GameProvider } from "./GameContext";
+import { GameProvider } from "./context/GameContext";
 import NavBar from "./components/NavBar/NavBar";
 
 function App() {

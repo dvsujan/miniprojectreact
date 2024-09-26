@@ -26,10 +26,13 @@ nav h1{
     align-items: center;
     flex-direction: row;
 }
+nav li{ 
+    list-style: none;
+
+}
 
 .nav-links ul li a{ 
     list-style: none;
     text-decoration: none;
-    color:black;
-    color:white ; 
+    color:#FAF7F0; 
 }
