@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./gamepage.css";
 import { GameContext } from "../../context/GameContext";
 import { useContext } from "react";
 import { aiMove } from "../../context/gameReducer";
 import Square from "../Square/Square";
+import useSound from "use-sound";
+import WinSound from '../../Assets/win.mp3'
+import LooseSound from '../../Assets/loose.mp3'
 
 /**
  *  function to render the Game Page
@@ -12,6 +15,9 @@ import Square from "../Square/Square";
  */
 const GamePage = (props) => {
   const { state, dispatch } = useContext(GameContext);
+  const [playWin] = useSound(WinSound);
+  const [playLoose] = useSound(LooseSound); 
+  
   /**
    * function to enable the ai player based on props
    */
@@ -21,13 +27,20 @@ const GamePage = (props) => {
       dispatch({ type: "ENABLE_AI", payload: { aiplayer } });
     }
   }, [dispatch]);
-
+  
   /**
    * function to handle the game logic
    */
   useEffect(() => {
     if (state.winner) {
+      if (props.aiplayer && state.winner === "O"){ 
+        playLoose();
+      }
+      else{ 
+        playWin(); 
+      }
       alert(`Player ${state.winner} wins!`);
+      dispatch({type:"RESET_GAME"}); 
     }
     if (state.isDraw) {
       alert("It's a draw!");
