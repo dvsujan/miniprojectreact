@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./gamepage.css";
 import { GameContext } from "../../context/GameContext";
 import { useContext } from "react";
-import { aiMove } from "../../context/gameReducer";
+import { aiMove } from "../../util/Ai";
 import Square from "../Square/Square";
 import useSound from "use-sound";
 import WinSound from '../../Assets/win.mp3'
@@ -67,7 +67,7 @@ const GamePage = (props) => {
       return () => clearTimeout(timer);
     }
   }, [state.currentPlayer, state.isAiEnabled, state.isGameOver, dispatch]);
- 
+  
   /**
    * function to handle the toggle of difficulty
    * @returns

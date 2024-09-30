@@ -9,7 +9,7 @@
 
 .board {
   width: 308px;
-  height: 309px;
+  height: 308px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
